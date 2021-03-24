@@ -1,0 +1,120 @@
+\documentclass[aspectratio=169]{beamer}
+\pdfsuppressptexinfo=1
+\usepackage{polski}
+\usepackage{hyperref}
+\hypersetup{unicode,pdfdisplaydoctitle,
+  pdftitle={Komunikator internetowy -- propozycja projektu},
+  pdfauthor={Michał Antonik},
+  pdfsubject={Indywidualny projekt programistyczny},
+  pdfkeywords={komunikator internetowy, propozycja}
+}
+\usepackage{qrcode}
+\beamertemplatenavigationsymbolsempty
+\title{Komunikator internetowy}
+\subtitle{Propozycja projektu}
+\author{Michał Antonik}
+\date{25 marca 2021}
+\usetheme{Hannover}
+\begin{document}
+\maketitle
+\section{Założenia}
+\begin{frame}
+  \frametitle{Założenia}
+  Aplikacja internetowa służąca do komunikacji między połączonymi użytkownikami.
+\end{frame}
+\section{Funkcje}
+\begin{frame}
+  \frametitle{Funkcje aplikacji}
+  \begin{itemize}
+    \item Komunikacja w czasie rzeczywistym.
+    \item Tworzenie pokoi z losowo generowanym identyfikatorem.
+    \item Dołączanie przy użyciu linku.
+    \item Wyświetlanie listy z nazwami użytkowników.
+  \end{itemize}
+\end{frame}
+\section{Narzędzia i technologie}
+\begin{frame}
+  \frametitle{Narzędzia i technologie}
+  \begin{itemize}
+    \item Narzędzia
+    \begin{itemize}
+      \item Vue.js
+      \item Node.js/Deno
+      \item Socket.IO
+    \end{itemize}
+    \item Technologie
+    \begin{itemize}
+      \item HTTPS
+      \item WebSocket
+      \item UUID -- Progressive web application
+      \item PWA -- Universally unique identifier
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+\section{Harmonogram}
+\begin{frame}[allowframebreaks]
+  \frametitle{Harmonogram}
+  2021-03-21 -- 2021-04-01
+  \begin{itemize}
+    \item Założenie i wstępne ustawienia projektu na Githubie.
+  \end{itemize}
+  2021-04-01 -- 2021-05-01
+  \begin{itemize}
+    \item Stworzenie wyglądu strony z podstawowym ułożeniem elementów.
+    \item Zapoznanie się z narzędziami
+    \begin{itemize}
+      \item Vue.js
+      \begin{itemize}
+        \item Komponenty, zdarzenia, atrybuty.
+        \item Vue CLI.
+        \item Pobieranie danych.
+      \end{itemize}
+      \item Node.js/Deno
+      \begin{itemize}
+        \item Prosty serwer HTTP.
+        \item Generacja identyfikatorów pokoi.
+        \item Komunikacja dwukierunkowa między serwerem a klientami.
+      \end{itemize}
+      \item Socket.IO
+      \begin{itemize}
+        \item Zapoznanie się z API serwera i klienta.
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+  2021-05-01 -- 2021-06-01
+  \begin{itemize}
+    \item Wyświetlanie listy użytkowników.
+    \item Aktywność osób połączonych z czatem.
+    \item Dopisywanie daty/godziny wysłania wiadomości.
+  \end{itemize}
+  2021-06-01 -- 2021-06-17
+  \begin{itemize}
+    \item Testy.
+    \item Naprawianie błędów.
+    \item Optymalizacje.
+  \end{itemize}
+\end{frame}
+\section{Rozwinięcie projektu}
+\begin{frame}
+  \frametitle{Rozwinięcie projektu}
+  \begin{itemize}
+    \item Przesyłanie video/audio przy użyciu WebRTC.
+  \end{itemize}
+\end{frame}
+\section{Kod}
+\begin{frame}
+  \frametitle{Kod projektu}
+  \begin{columns}
+    \begin{column}{.6\linewidth}
+      \begin{center}
+        \url{https://github.com/mitonik/web-chat}
+      \end{center}
+    \end{column}
+    \begin{column}{.4\linewidth}
+      \begin{center}
+        \qrcode{https://github.com/mitonik/web-chat}
+      \end{center}
+    \end{column}
+  \end{columns}
+\end{frame}
+\end{document}
