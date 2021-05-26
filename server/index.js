@@ -11,23 +11,18 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/dist/index.html');
 });
 
-const clients = new Map();
-let clientId = 0;
-
 io.on('connection', (socket) => {
-  const id = ++clientId;
-  clients.set(id, socket);
-  console.log('User ' + id + ' connected.');
-  io.emit('userConnect', 'User ' + id + ' connected.');
+  console.log('User ' + socket.id + ' connected.');
+  io.emit('userConnect', 'User ' + socket.id + ' connected.');
 
   socket.on('disconnect', () => {
-    console.log('User ' + id + ' disconnected.');
-    io.emit('userDisconnect', 'User ' + id + ' disconnected.');
+    console.log('User ' + socket.id + ' disconnected.');
+    io.emit('userDisconnect', 'User ' + socket.id + ' disconnected.');
   });
 
   socket.on('message', (msg) => {
-    console.log('User ' + id + ': ' + msg);
-    io.emit('message', 'User ' + id + ': ' + msg);
+    console.log('User ' + socket.id + ': ' + msg);
+    io.emit('message', 'User ' + socket.id + ': ' + msg);
   });
 });
 
