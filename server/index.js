@@ -5,24 +5,29 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-app.use(express.static(__dirname + '/client/'));
+app.use(express.static(__dirname + '/dist/'));
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/client/index.html');
+  res.sendFile(__dirname + '/dist/index.html');
 });
 
+const clients = new Map();
+let clientId = 0;
+
 io.on('connection', (socket) => {
-  console.log('a user connected');
-  io.emit('userConnect', 'User connected.');
+  const id = ++clientId;
+  clients.set(id, socket);
+  console.log('User ' + id + ' connected.');
+  io.emit('userConnect', 'User ' + id + ' connected.');
+
   socket.on('disconnect', () => {
-    console.log('user disconnected');
-    io.emit('userDisconnect', 'User disconnected.');
+    console.log('User ' + id + ' disconnected.');
+    io.emit('userDisconnect', 'User ' + id + ' disconnected.');
   });
+
   socket.on('message', (msg) => {
-    console.log('message: ' + msg);
-  });
-  socket.on('message', (msg) => {
-    io.emit('message', msg);
+    console.log('User ' + id + ': ' + msg);
+    io.emit('message', 'User ' + id + ': ' + msg);
   });
 });
 

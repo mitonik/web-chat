@@ -1,6 +1,5 @@
 {
-  "name": "server",
-  "version": "0.0.1",
+  "name": "web-chat-server",
   "dependencies": {
     "express": "^4.17.1",
     "socket.io": "^4.1.2"
