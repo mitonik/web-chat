@@ -59,9 +59,6 @@ export default {
       this.$router.push({params: {id: id}});
     })
   },
-  updated: () => {
-    socket = io('ws://localhost:3000/');
-  },
   beforeUnmount: function() {
     socket.disconnect();
   }
