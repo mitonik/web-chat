@@ -1,15 +1,13 @@
 <template>
-  <keep-alive>
-    <main>
-      <ul>
-        <li v-for="message in messages">{{ message }}</li>
-      </ul>
-      <form @submit.prevent="sendMessage">
-        <input id="message" v-model="message" type="text" placeholder="Write your message here." autocomplete="off"/>
-        <input type="submit" value="Send">
-      </form>
-    </main>
-  </keep-alive>
+  <main>
+    <ul>
+      <li v-for="message in messages">{{ message }}</li>
+    </ul>
+    <form @submit.prevent="sendMessage">
+      <input id="message" v-model="message" type="text" placeholder="Write your message here." autocomplete="off" required/>
+      <input type="submit" value="Send">
+    </form>
+  </main>
 </template>
 
 <script>
@@ -32,26 +30,40 @@ export default {
     }
   },
   mounted: function() {
-    socket = io('http://localhost:3000/');
-    var messages = this.messages;
+    socket = io('ws://localhost:3000/');
 
-    socket.on('message', function(message) {
+    socket.on('connect', () => {
+      if(this.$route.params.id === '') {
+        this.$router.push({params: {id: socket.id}});
+      }
+      else {
+        socket.emit('joinRoom', (this.$route.params.id));
+      }
+    })
+
+    let messages = this.messages;
+
+    socket.on('message', (message) => {
       messages.push(message);
     })
 
-    socket.on('userConnect', function(message) {
+    socket.on('userConnect', (message) => {
       messages.push(message);
     })
     
-    socket.on('userDisconnect', function(message) {
+    socket.on('userDisconnect', (message) => {
       messages.push(message);
     })
+
+    socket.on('joinedRoom', (id) => {
+      this.$router.push({params: {id: id}});
+    })
+  },
+  updated: () => {
+    socket = io('ws://localhost:3000/');
   },
   beforeUnmount: function() {
     socket.disconnect();
   }
 }
 </script>
-
-<style>
-</style>
