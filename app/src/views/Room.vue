@@ -5,7 +5,7 @@
     </ul>
     <form @submit.prevent="sendMessage">
       <input id="message" v-model="message" type="text" placeholder="Write your message here." autocomplete="off" required/>
-      <input type="submit" value="Send">
+      <input id="messageSendButton" type="submit" value="Send">
     </form>
   </main>
 </template>
