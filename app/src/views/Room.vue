@@ -51,7 +51,9 @@ export default {
     let messages = this.messages;
 
     socket.on('message', (message) => {
-      messages.push(message);
+      let currentDate = new Date();
+      let time = currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
+      messages.push('[' + time + '] ' + message);
     })
 
     socket.on('userConnect', (user) => {
