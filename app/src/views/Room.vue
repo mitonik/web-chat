@@ -1,7 +1,11 @@
 <template>
   <main>
-    <ul>
+    <ul class="messages">
       <li v-for="message in messages">{{ message }}</li>
+    </ul>
+    <ul>
+      <h2>Users</h2>
+      <li v-for="user in users">{{ user }}</li>
     </ul>
     <form @submit.prevent="sendMessage">
       <input id="message" v-model="message" type="text" placeholder="Write your message here." autocomplete="off" required/>
@@ -19,8 +23,10 @@ export default {
   name: 'App',
   data: function() {
     return {
+      userId: '',
       message: '',
-      messages: []
+      messages: [],
+      users: []
     }
   },
   methods: {
@@ -35,6 +41,7 @@ export default {
     socket.on('connect', () => {
       if(this.$route.params.id === '') {
         this.$router.push({params: {id: socket.id}});
+        this.users.push(socket.id);
       }
       else {
         socket.emit('joinRoom', (this.$route.params.id));
@@ -47,16 +54,22 @@ export default {
       messages.push(message);
     })
 
-    socket.on('userConnect', (message) => {
-      messages.push(message);
+    socket.on('userConnect', (user) => {
+      //messages.push(message);
+      this.users.push(user);
     })
     
-    socket.on('userDisconnect', (message) => {
-      messages.push(message);
+    socket.on('userDisconnect', (userId) => {
+      for (let i = 0; i < this.users.length; i++) {
+        if(this.users[i] == userId) {
+          this.users.splice(i, 1);
+        }
+      }
     })
 
-    socket.on('joinedRoom', (id) => {
-      this.$router.push({params: {id: id}});
+    socket.on('joinedRoom', (message) => {
+      this.users = message.users;
+      this.$router.push({params: {id: message.roomId}});
     })
   },
   beforeUnmount: function() {

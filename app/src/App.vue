@@ -58,12 +58,14 @@ main form {
   width: 100%;
 }
 main ul {
-  flex-grow: 1;
   overflow: auto;
   background-color: #2a214d;
   margin: 0 10px 10px 10px;
   padding: 20px;
   border-radius: 5px;
+}
+main ul.messages {
+  flex-grow: 1;
 }
 ul li {
   color: #b3adce;
@@ -90,6 +92,7 @@ main form input#message:focus-visible {
 main form input#messageSendButton {
   width: 100px;
   margin: 0px 10px 10px 0px;
+  cursor: pointer;
 }
 @media (min-width: 960px) {
   main {

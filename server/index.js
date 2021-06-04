@@ -9,20 +9,26 @@ io.on('connection', (socket) => {
   let roomId = socket.id;
 
   socket.on('disconnect', () => {
-    console.log('User ' + socket.id + ' disconnected.');
-    io.to(roomId).emit('userDisconnect', 'User ' + socket.id + ' disconnected.');
+    io.to(roomId).emit('userDisconnect', socket.id);
   });
 
   socket.on('message', (msg) => {
-    console.log('User ' + socket.id + ': ' + msg);
-    io.to(roomId).emit('message', 'User ' + socket.id + ': ' + msg);
+    io.to(roomId).emit('message', socket.id + ': ' + msg);
   });
 
   socket.on('joinRoom', (id) => {
     roomId = id;
     socket.join(roomId);
-    socket.to(roomId).emit('joinedRoom', (roomId));
-    io.to(roomId).emit('userConnect', 'User ' + socket.id + ' connected.');
+    let users = [];
+    for (let user of io.sockets.adapter.rooms.get(roomId)) {
+      users.push(user);
+    }
+    let message = {
+      roomId: roomId,
+      users: users
+    }
+    io.to(roomId).emit('userConnect', socket.id);
+    socket.emit('joinedRoom', (message));
   })
 });
 
